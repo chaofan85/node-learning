@@ -1,11 +1,9 @@
+// import module
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
 const EventEmitter = require('events');
-
-// import module
-const log = require('./logger');
-log('message');
+const Logger = require('./logger');
 
 // path module
 const pathObj = path.parse(__filename);
@@ -19,8 +17,7 @@ console.log('Total Memory: ' + totalMemory);
 console.log(`Free Memory: ${freeMemory}`);
 
 // file system module
-
-fs.readdir('./', function(err, files) {
+fs.readdir('./', (err, files) => {
   if (err) {
     console.log('Error ', err);
   } else {
@@ -28,13 +25,11 @@ fs.readdir('./', function(err, files) {
   }
 });
 
-// Event Emitter
-const emitter = new EventEmitter();
+const logger = new Logger();
 
 // Register a listener
-emitter.on('messageLogged', function() {
-  console.log('Listener called');
+logger.on('messageLogged', arg => {
+  console.log('Listener called', arg);
 });
 
-// Raise an event
-emitter.emit('messageLogged');
+logger.log('message');
