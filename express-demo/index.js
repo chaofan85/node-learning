@@ -1,11 +1,21 @@
 const Joi = require('joi');
 const express = require('express');
+const helmet = require('helmet');
 const logger = require('./logger');
 const app = express();
 
+// using middlewares
 app.use(express.json());
-
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.static('public'));
+app.use(helmet());
 app.use(logger);
+
+// check environment
+if (app.get('env') === 'development') {
+  // app.use(middleware());
+  console.log('development environment');
+}
 
 const courses = [
   { id: 1, name: 'course1' },
