@@ -2,6 +2,7 @@ const Joi = require('joi');
 const express = require('express');
 const helmet = require('helmet');
 const logger = require('./logger');
+const config = require('config');
 const app = express();
 
 // using middlewares
@@ -10,6 +11,10 @@ app.use(express.json());
 // app.use(express.static('public'));
 app.use(helmet());
 app.use(logger);
+
+// Configuration
+console.log(`Application Name: ${config.get('name')}`);
+console.log(`Mail Server: ${config.get('mail.host')}`);
 
 // check environment
 if (app.get('env') === 'development') {
