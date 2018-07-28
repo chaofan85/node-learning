@@ -3,6 +3,8 @@ const express = require('express');
 const helmet = require('helmet');
 const logger = require('./logger');
 const config = require('config');
+const startupDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
 const app = express();
 
 // using middlewares
@@ -15,11 +17,12 @@ app.use(logger);
 // Configuration
 console.log(`Application Name: ${config.get('name')}`);
 console.log(`Mail Server: ${config.get('mail.host')}`);
+console.log(`Mail Password: ${config.get('mail.password')}`);
 
 // check environment
 if (app.get('env') === 'development') {
   // app.use(middleware());
-  console.log('development environment');
+  startupDebugger('development environment');
 }
 
 const courses = [
