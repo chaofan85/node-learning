@@ -7,6 +7,9 @@ const startupDebugger = require('debug')('app:startup');
 const dbDebugger = require('debug')('app:db');
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views', './views');
+
 // using middlewares
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
@@ -32,7 +35,7 @@ const courses = [
 ];
 
 app.get('/', (req, res) => {
-  res.send('Hello World!!!');
+  res.render('index', { title: 'My Express App', message: 'Hello' });
 });
 
 app.get('/api/courses', (req, res) => {
