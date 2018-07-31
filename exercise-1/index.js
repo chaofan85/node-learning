@@ -25,12 +25,20 @@ async function getCourses() {
 async function getCourses2() {
   return await Course.find({
     isPublished: true,
-    $or: [{ tags: 'frontend' }, { tags: 'backend' }]
-  }).sort({ price: -1 });
+    tags: { $in: ['frontend', 'backend'] }
+  })
+    .sort('-price')
+    .select('name author price');
+}
+
+async function getCourses3() {
+  return await Course.find({
+    isPublished: true
+  }).or([{ price: { $gte: 15 } }, { name: /.*by*./i }]);
 }
 
 async function run() {
-  const courses = await getCourses2();
+  const courses = await getCourses3();
   console.log(courses);
 }
 
