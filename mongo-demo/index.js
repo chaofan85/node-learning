@@ -76,5 +76,3 @@ async function removeCourse(id) {
 }
 
 removeCourse('5b611b3310a28813b2c15d49');
-
-// Course.findById('5b611b3310a28813b2c15d49').then(course => console.log(course));
