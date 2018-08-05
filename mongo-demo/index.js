@@ -6,7 +6,7 @@ mongoose
   .catch(err => console.error('Could not connect to MongoDB...', err));
 
 const courseSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, required: true },
   author: String,
   tags: [String],
   date: { type: Date, default: Date.now },
@@ -23,8 +23,13 @@ async function createCourse() {
     isPublished: true
   });
 
-  const result = await course.save();
-  console.log(result);
+  try {
+    await course.validate();
+    const result = await course.save();
+    console.log(result);
+  } catch (ex) {
+    console.log(ex.message);
+  }
 }
 
 async function getCourses() {
