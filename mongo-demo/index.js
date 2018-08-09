@@ -15,7 +15,8 @@ const courseSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ['web', 'mobile', 'network']
+    enum: ['web', 'mobile', 'network'],
+    lowercase: true
   },
   author: String,
   tags: {
@@ -39,7 +40,9 @@ const courseSchema = new mongoose.Schema({
       return this.isPublished;
     },
     min: 10,
-    max: 200
+    max: 200,
+    get: v => Math.round(v),
+    set: v => Math.round(v)
   }
 });
 
@@ -50,14 +53,17 @@ async function createCourse() {
     name: 'Node.js Course',
     author: 'Chao',
     tags: ['node.js', 'frontend'],
-    isPublished: true
+    isPublished: true,
+    price: 15
   });
 
   try {
     const result = await course.save();
     console.log(result);
   } catch (ex) {
-    console.log(ex.message);
+    for (field in ex.errors) {
+      console.log(ex.errors[field]);
+    }
   }
 }
 
