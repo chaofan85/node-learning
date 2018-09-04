@@ -26,7 +26,7 @@ const User = mongoose.model(
   })
 );
 
-function validateGenre(user) {
+function validateUser(user) {
   const schema = {
     name: Joi.string()
       .min(5)
@@ -47,4 +47,4 @@ function validateGenre(user) {
 }
 
 exports.User = User;
-exports.validate = validateGenre;
+exports.validate = validateUser;
